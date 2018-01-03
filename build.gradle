@@ -1,0 +1,101 @@
+import groovy.io.FileType
+import org.apache.commons.net.ftp.FTP
+import org.apache.commons.net.ftp.FTPClient
+
+buildscript {
+    ext.kotlin_version = '1.2.10'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'no.tornado:fxlauncher-gradle-plugin:1.0.17'
+        classpath 'commons-net:commons-net:3.6'
+    }
+}
+
+group 'com.jaspervanmerle.cglocal'
+version '1.0.0'
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+apply plugin: 'no.tornado.fxlauncher'
+
+mainClassName = "${group}.CGLocal"
+
+fxlauncher {
+    applicationVendor 'Jasper van Merle'
+    applicationVersion "$version"
+    applicationMainClass "$mainClassName"
+    applicationParameters "--version=$version"
+    applicationUrl 'https://jaspervanmerle.com/cg-local/files/'
+    cacheDir 'USERLIB/CGLocal'
+    acceptDowngrade false
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.github.microutils:kotlin-logging:1.4.8'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'com.mihnita:color-loggers:1.0.5'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile 'no.tornado:tornadofx:1.7.14'
+    compile 'de.jensd:fontawesomefx:8.9'
+    compile 'org.java-websocket:Java-WebSocket:1.3.7'
+    compile 'org.json:json:20171018'
+    compile 'name.mitterdorfer.perlock:perlock-core:0.3.1'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+task packageApp(group: 'distribution', dependsOn: ['clean', 'embedApplicationManifest'])
+
+task uploadApp(group: 'distribution', dependsOn: ['packageApp']) {
+    doLast {
+        def ftp = new FTPClient()
+
+        try {
+            ftp.connect("ftp.jaspervanmerle.com", 21)
+            ftp.login(System.getenv("FTP_USERNAME"), System.getenv("FTP_PASSWORD"))
+            ftp.changeWorkingDirectory("files")
+
+            ftp.setFileType(FTP.BINARY_FILE_TYPE)
+
+            def existingFiles = ftp.listFiles()
+            for (def file : existingFiles) {
+                ftp.deleteFile(file.name)
+            }
+
+            fxlauncher.resolveWorkingDirectory().eachFile(FileType.FILES) {
+                def name = it.name
+
+                if (name == "fxlauncher.jar") {
+                    name = "CG Local.jar"
+                }
+
+                it.newInputStream().withCloseable {
+                    println("Uploading $name")
+                    ftp.storeFile(name, it)
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace()
+            System.exit(1)
+        } finally {
+            if (ftp.isConnected()) {
+                ftp.disconnect()
+            }
+        }
+    }
+}
