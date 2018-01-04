@@ -22,8 +22,10 @@ import tornadofx.*
 import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.concurrent.schedule
 
 class ConnectedController : Controller() {
     companion object : KLogging()
@@ -122,6 +124,9 @@ class ConnectedController : Controller() {
 
         watcher = factory.createNonRecursiveWatcher(Paths.get(selectedFile.parent)) {
             eventKind: EventKind, path: Path ->
+            logger.info("Path: $path")
+            logger.info("Event kind: $eventKind")
+
             if (path == selectedFile.toPath()) {
                 when (eventKind) {
                     EventKind.MODIFY -> {
@@ -130,8 +135,10 @@ class ConnectedController : Controller() {
                         }
                     }
                     EventKind.DELETE -> {
-                        runLater {
-                            onSelectedFileDeleted()
+                        Timer().schedule(250) {
+                            runLater {
+                                onSelectedFileDeleted()
+                            }
                         }
                     }
                     else -> {}
@@ -171,22 +178,20 @@ class ConnectedController : Controller() {
     }
 
     fun onSelectedFileChange() {
-        if (selectedFile.exists()) {
-            if (ignoreFileChange == 0) {
-                logger.info("Synchronizing local file with editor")
+        if (ignoreFileChange == 0) {
+            logger.info("Synchronizing local file with editor")
 
-                ignoreEditorChange = true
-                Server.connectedSocket?.updateCode(selectedFile.getSource(), Config.autoPlay)
-            }
-
-            if (ignoreFileChange > 0) ignoreFileChange--
-        } else {
-            onSelectedFileDeleted()
+            ignoreEditorChange = true
+            Server.connectedSocket?.updateCode(selectedFile.getSource(), Config.autoPlay)
         }
+
+        if (ignoreFileChange > 0) ignoreFileChange--
     }
 
     fun onSelectedFileDeleted() {
-        logger.error("The local file was deleted")
-        Server.connectedSocket?.error("The local file has been deleted!")
+        if (!selectedFile.exists()) {
+            logger.error("The local file was deleted")
+            Server.connectedSocket?.error("The local file has been deleted!")
+        }
     }
 }
