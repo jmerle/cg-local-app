@@ -129,15 +129,23 @@ class ConnectedController : Controller() {
 
             if (path == selectedFile.toPath()) {
                 when (eventKind) {
+                    EventKind.CREATE -> {
+                        runLater {
+                            onSelectedFileChange()
+                        }
+                    }
                     EventKind.MODIFY -> {
                         runLater {
                             onSelectedFileChange()
                         }
                     }
                     EventKind.DELETE -> {
-                        Timer().schedule(250) {
+                        val timer = Timer()
+                        timer.schedule(250) {
                             runLater {
                                 onSelectedFileDeleted()
+                                timer.cancel()
+                                timer.purge()
                             }
                         }
                     }
