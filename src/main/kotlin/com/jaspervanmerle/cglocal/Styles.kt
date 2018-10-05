@@ -2,9 +2,6 @@ package com.jaspervanmerle.cglocal
 
 import javafx.geometry.Pos
 import javafx.scene.Cursor
-import javafx.scene.effect.Effect
-import javafx.scene.effect.Shadow
-import javafx.scene.layout.BorderStrokeStyle
 import javafx.scene.text.FontWeight
 import javafx.scene.text.TextAlignment
 import tornadofx.*

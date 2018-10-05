@@ -7,10 +7,6 @@ import java.nio.file.Paths
 import java.util.prefs.Preferences
 
 object Config {
-    /**
-     * On Windows machines with a Java version lower than 9 a Java warning
-     * might show up about the registry. This warning can be ignored.
-     */
     val prefs = Preferences.userNodeForPackage(CGLocal::class.java)
 
     var oneFileForAllPuzzles: Boolean

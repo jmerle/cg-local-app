@@ -5,13 +5,13 @@ import com.jaspervanmerle.cglocal.controller.StatusController
 import com.jaspervanmerle.cglocal.view.MainView
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
-import javafx.event.EventTarget
 import javafx.scene.layout.BorderPane
 import mu.KotlinLogging
 import tornadofx.*
 import java.awt.Desktop
 import java.io.File
 import java.net.URL
+import kotlin.concurrent.thread
 import kotlin.reflect.KClass
 
 val logger = KotlinLogging.logger {}
@@ -37,9 +37,14 @@ inline fun icon(icon: FontAwesomeIcon, op: FontAwesomeIconView.() -> Unit = {}):
 }
 
 fun openBrowser(url: String) {
-    try {
-        Desktop.getDesktop().browse(URL(url).toURI())
-    } catch (e: Exception) {}
+    if (Desktop.isDesktopSupported()) {
+        // On Linux, getDesktop().browse() hangs the application
+        // That issue can be fixed by running the call in a separate thread
+        thread {
+            logger.info("Opening $url")
+            Desktop.getDesktop().browse(URL(url).toURI())
+        }
+    }
 }
 
 fun File.getSource(): String {

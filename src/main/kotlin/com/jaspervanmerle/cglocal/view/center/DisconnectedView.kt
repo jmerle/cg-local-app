@@ -5,6 +5,7 @@ import com.jaspervanmerle.cglocal.util.openBrowser
 import javafx.geometry.Pos
 import javafx.scene.text.FontWeight
 import tornadofx.*
+import java.awt.Desktop
 
 class DisconnectedView : View() {
     override val root = vbox {
@@ -21,11 +22,13 @@ class DisconnectedView : View() {
             }
         }
 
-        button("Open CodinGame") {
-            addClass(Styles.orangeButton)
+        if (Desktop.isDesktopSupported()) {
+            button("Open CodinGame") {
+                addClass(Styles.orangeButton)
 
-            action {
-                openBrowser("https://www.codingame.com/")
+                action {
+                    openBrowser("https://www.codingame.com/")
+                }
             }
         }
     }

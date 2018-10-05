@@ -28,6 +28,9 @@ class CGLocal : App(MainView::class, Styles::class) {
             alert.showAndWait()
             System.exit(0)
         }
+
+        // Improve font rendering on Linux
+        System.setProperty("prism.lcdtext", "false")
     }
 
     override fun start(stage: Stage) {
