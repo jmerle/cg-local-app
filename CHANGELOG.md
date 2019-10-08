@@ -1,3 +1,6 @@
+# 1.1.1 - October 8th, 2019
+- Made the window resizable to fix issues on KDE
+
 # 1.1.0 - October 6th, 2018
 - Removed the FXLauncher dependency, which previously handled the auto-updating. Since the application is considered stable, this is no longer necessary. By removing FXLauncher, I am not required to keep up a webhost to host the files on, and the application will launch faster because it doesn't have to do an up-to-date check.
 - Fixed font rendering issues on Linux

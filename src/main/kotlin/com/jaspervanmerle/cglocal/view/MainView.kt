@@ -20,7 +20,6 @@ class MainView : View("CG Local") {
     init {
         currentStage?.width = 400.0
         currentStage?.height = 500.0
-        currentStage?.isResizable = false
 
         controller.init()
     }
