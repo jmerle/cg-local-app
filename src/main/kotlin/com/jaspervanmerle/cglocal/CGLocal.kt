@@ -19,37 +19,49 @@ class CGLocal : JFrame() {
         var stopping = false
     }
 
-    private lateinit var instanceSocket: ServerSocket
-
     private val mainView: MainView by koin.inject()
     private val mainController: MainController by koin.inject()
 
+    private lateinit var instanceSocket: ServerSocket
+
     fun start() {
-        if (!isFirstInstance()) {
-            errorAndExit("Only one instance of CG Local can be running at a time.\nPlease use the running instance.")
+        ensureSingleInstance()
+        addShutdownHook()
+        addWindowCloseListener()
+        configureFrame()
+        showFrame()
+    }
+
+    private fun ensureSingleInstance() {
+        if (isFirstInstance()) {
+            return
         }
 
+        errorAndExit("Only one instance of CG Local can be running at a time.\nPlease use the running instance.")
+    }
+
+    private fun isFirstInstance(): Boolean {
+        return try {
+            val address = InetAddress.getByAddress(arrayOf(127.toByte(), 0, 0, 1).toByteArray())
+            instanceSocket = ServerSocket(Constants.LOCK_PORT, 0, address)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun addShutdownHook() {
         Runtime.getRuntime().addShutdownHook(thread(false) {
             stop()
         })
+    }
 
+    private fun addWindowCloseListener() {
         addWindowListener(object : WindowAdapter() {
             override fun windowClosing(e: WindowEvent?) {
                 stop()
             }
         })
-
-        IconFontSwing.register(FontAwesome.getIconFont())
-
-        title = "CG Local"
-        defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
-        isResizable = false
-
-        contentPane = mainView
-
-        pack()
-        isVisible = true
-        setLocationRelativeTo(null)
     }
 
     private fun stop() {
@@ -61,13 +73,19 @@ class CGLocal : JFrame() {
         mainController.stop()
     }
 
-    private fun isFirstInstance(): Boolean {
-        return try {
-            val address = InetAddress.getByAddress(arrayOf(127.toByte(), 0, 0, 1).toByteArray())
-            instanceSocket = ServerSocket(Constants.LOCK_PORT, 0, address)
-            true
-        } catch (e: Exception) {
-            false
-        }
+    private fun configureFrame() {
+        IconFontSwing.register(FontAwesome.getIconFont())
+
+        title = "CG Local"
+        defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+        isResizable = false
+
+        contentPane = mainView
+    }
+
+    private fun showFrame() {
+        pack()
+        isVisible = true
+        setLocationRelativeTo(null)
     }
 }
