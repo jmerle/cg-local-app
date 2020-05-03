@@ -1,7 +1,5 @@
 package com.jaspervanmerle.cglocal
 
-import com.jaspervanmerle.cglocal.server.Server
-import com.jaspervanmerle.cglocal.server.setReadOnly
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.prefs.Preferences
@@ -21,7 +19,7 @@ object Config {
         get() = prefs.getBoolean("twoWayDataBinding", false)
         set(value) {
             prefs.putBoolean("twoWayDataBinding", value)
-            Server.connectedSocket?.setReadOnly(!value)
+            // Server.connectedSocket?.setReadOnly(!value)
         }
 
     var defaultAction: String

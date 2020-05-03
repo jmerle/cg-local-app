@@ -1,3 +1,6 @@
+# 1.2.0 - TBD
+- Migrated from JavaFX to Swing so it works on pretty much all Java versions (8 or newer) without needing OpenJFX.
+
 # 1.1.1 - October 8th, 2019
 - Made the window resizable to fix issues on KDE
 
