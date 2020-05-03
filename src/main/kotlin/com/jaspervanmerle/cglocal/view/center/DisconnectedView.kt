@@ -10,7 +10,7 @@ import kotlin.concurrent.thread
 class DisconnectedView : View("wrap 1, insets 20, align center", "align center") {
     init {
         label("Please connect via the CodinGame IDE") {
-            font = Font(font.name, Font.BOLD, 16)
+            font = font.deriveFont(Font.BOLD, 16f)
         }
 
         if (Desktop.isDesktopSupported()) {

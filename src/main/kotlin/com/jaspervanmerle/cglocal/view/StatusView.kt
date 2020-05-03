@@ -15,7 +15,7 @@ class StatusView : View("align center") {
 
         label(controller.statusProperty) {
             foreground = Constants.WHITE
-            font = Font(font.name, Font.PLAIN, 14)
+            font = font.deriveFont(Font.PLAIN, 14f)
         }
     }
 }

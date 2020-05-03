@@ -5,7 +5,10 @@ import com.jaspervanmerle.cglocal.controller.StatusController
 import com.jaspervanmerle.cglocal.view.MainView
 import mu.KotlinLogging
 import java.awt.BorderLayout
+import java.awt.Color
 import javax.swing.JPanel
+import kotlin.math.min
+import kotlin.math.round
 import kotlin.reflect.KClass
 
 val logger = KotlinLogging.logger {}
@@ -38,6 +41,13 @@ fun setStatus(status: String) {
         return
     }
 
-    logger.info("Changing status to \"$status\"")
+    logger.info("Changing status to '$status'")
     koin.get<StatusController>().status = status
+}
+
+fun Color.manipulate(factor: Float): Color {
+    val newRed = min(round(red * factor).toInt(), 255)
+    val newGreen = min(round(green * factor).toInt(), 255)
+    val newBlue = min(round(blue * factor).toInt(), 255)
+    return Color(newRed, newGreen, newBlue, alpha)
 }

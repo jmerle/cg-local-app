@@ -1,6 +1,5 @@
 package com.jaspervanmerle.cglocal.view.button
 
-import com.jaspervanmerle.cglocal.Constants
 import java.awt.AlphaComposite
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -13,8 +12,6 @@ class IconButton(icon: Icon) : Button(icon) {
     init {
         isContentAreaFilled = false
         border = EmptyBorder(0, 0, 0, 0)
-
-        background = Constants.TRANSPARENT
 
         addChangeListener {
             alpha = if (model.isRollover) 0.7f else 1.0f

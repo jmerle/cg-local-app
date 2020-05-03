@@ -1,10 +1,12 @@
 package com.jaspervanmerle.cglocal.view
 
+import com.jaspervanmerle.cglocal.Constants
 import com.jaspervanmerle.cglocal.util.ObservableProperty
 import com.jaspervanmerle.cglocal.view.button.IconButton
 import com.jaspervanmerle.cglocal.view.button.TextButton
 import net.miginfocom.swing.MigLayout
 import java.awt.Color
+import java.awt.Font
 import java.awt.LayoutManager
 import javax.swing.Icon
 import javax.swing.JButton
@@ -17,21 +19,27 @@ abstract class View : JPanel {
 
     constructor(layoutManager: LayoutManager) : super(layoutManager)
 
-    protected fun JPanel.label(label: String, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
-        val formattedLabel = if ("</font>" in label) {
-            "<html>$label</html>"
+    protected fun JPanel.label(text: String, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
+        val formattedText = if ("</font>" in text) {
+            "<html>$text</html>"
         } else {
-            label
+            text
         }
 
-        return JLabel(formattedLabel).apply(init).also {
-            add(it, constraints)
-        }
+        return JLabel(formattedText)
+            .apply {
+                foreground = Constants.BLACK
+                font = font.deriveFont(Font.BOLD, 14f)
+            }
+            .also(init)
+            .also {
+                add(it, constraints)
+            }
     }
 
-    protected fun JPanel.label(label: ObservableProperty<String>, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
-        return label(label.value, constraints, init).also { component ->
-            label.observe {
+    protected fun JPanel.label(text: ObservableProperty<String>, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
+        return label(text.value, constraints, init).also { component ->
+            text.observe {
                 component.text = it
             }
         }

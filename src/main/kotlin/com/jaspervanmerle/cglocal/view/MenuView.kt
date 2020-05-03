@@ -14,7 +14,7 @@ class MenuView : View("insets 0 10 0 10, aligny center", "[grow]") {
         background = Constants.BLACK
 
         label("CG".color(Constants.WHITE) + "Local".color(Constants.ORANGE)) {
-            font = Font(font.name, Font.BOLD, 26)
+            font = font.deriveFont(Font.BOLD, 26f)
         }
 
         button(settingsController.iconProperty, "right") {

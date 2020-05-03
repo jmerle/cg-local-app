@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
     implementation("io.github.microutils:kotlin-logging:1.6.10")
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("com.mihnita:color-loggers:1.0.5")

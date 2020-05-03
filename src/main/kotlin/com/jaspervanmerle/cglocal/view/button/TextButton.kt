@@ -1,14 +1,12 @@
 package com.jaspervanmerle.cglocal.view.button
 
 import com.jaspervanmerle.cglocal.Constants
-import java.awt.Color
+import com.jaspervanmerle.cglocal.util.manipulate
 import java.awt.Dimension
 import java.awt.Font
 import java.awt.Graphics
 import javax.swing.AbstractButton
 import javax.swing.plaf.metal.MetalButtonUI
-import kotlin.math.min
-import kotlin.math.round
 
 class TextButton(text: String) : Button(text) {
     init {
@@ -17,7 +15,7 @@ class TextButton(text: String) : Button(text) {
         background = Constants.ORANGE
         foreground = Constants.BLACK
 
-        font = Font(font.name, Font.BOLD, 14)
+        font = font.deriveFont(Font.BOLD, 14f)
 
         ui = object : MetalButtonUI() {
             override fun paintButtonPressed(g: Graphics?, b: AbstractButton?) {
@@ -32,12 +30,5 @@ class TextButton(text: String) : Button(text) {
                 Constants.ORANGE
             }
         }
-    }
-
-    private fun Color.manipulate(factor: Float): Color {
-        val newRed = min(round(red * factor).toInt(), 255)
-        val newGreen = min(round(green * factor).toInt(), 255)
-        val newBlue = min(round(blue * factor).toInt(), 255)
-        return Color(newRed, newGreen, newBlue, alpha)
     }
 }

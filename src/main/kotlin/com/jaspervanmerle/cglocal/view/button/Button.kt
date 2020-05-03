@@ -1,9 +1,8 @@
 package com.jaspervanmerle.cglocal.view.button
 
-import java.awt.AlphaComposite
 import java.awt.Cursor
-import java.awt.Graphics
-import java.awt.Graphics2D
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import javax.swing.Icon
 import javax.swing.JButton
 
