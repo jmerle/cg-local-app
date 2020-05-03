@@ -34,20 +34,20 @@ class ConnectedController : KLogging() {
     private val config: Config by koin.inject()
     private val connectedView: ConnectedView by koin.inject()
 
-    val titleProperty = ObservableProperty("")
-    var title by titleProperty
+    private val titleProperty = ObservableProperty("")
+    private var title by titleProperty
 
-    val firstActionDisabledProperty = ObservableProperty(false)
-    var firstActionDisabled by firstActionDisabledProperty
+    private val firstActionDisabledProperty = ObservableProperty(false)
+    private var firstActionDisabled by firstActionDisabledProperty
 
-    var questionId = -1
-    var selectedFile = File("")
+    private var questionId = -1
+    private var selectedFile = File("")
 
-    var watcher: PathWatcher? = null
-    var watcherExecutor: ExecutorService? = null
+    private var watcher: PathWatcher? = null
+    private var watcherExecutor: ExecutorService? = null
 
-    var ignoreEditorChange = false
-    var ignoreFileChange = 0
+    private var ignoreEditorChange = false
+    private var ignoreFileChange = 0
 
     fun init(title: String, questionId: Int) {
         this.title = title

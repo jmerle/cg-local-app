@@ -18,8 +18,8 @@ class SettingsController {
     private val closedIcon = IconFontSwing.buildIcon(FontAwesome.COG, 26.0f, Constants.WHITE)
     private val openedIcon = IconFontSwing.buildIcon(FontAwesome.HOME, 26.0f, Constants.WHITE)
 
-    val iconProperty = ObservableProperty<Icon>(closedIcon)
-    var icon by iconProperty
+    private val iconProperty = ObservableProperty<Icon>(closedIcon)
+    private var icon by iconProperty
 
     private var settingsClosed = true
 
@@ -27,7 +27,7 @@ class SettingsController {
         icon = closedIcon
     }
 
-    fun toggleSettings() {
+    private fun toggleSettings() {
         if (settingsClosed) {
             setCenter(SettingsView::class)
         } else {
@@ -39,12 +39,12 @@ class SettingsController {
         }
     }
 
-    fun setSettingsOpened() {
+    private fun setSettingsOpened() {
         icon = openedIcon
         settingsClosed = false
     }
 
-    fun setSettingsClosed() {
+    private fun setSettingsClosed() {
         icon = closedIcon
         settingsClosed = true
     }
