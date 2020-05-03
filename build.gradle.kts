@@ -1,16 +1,17 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    id("com.github.johnrengelman.shadow") version "5.2.0"
     kotlin("jvm") version "1.3.72"
+    id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
 group = "com.jaspervanmerle.cglocal"
 version = "1.1.1"
 
 application {
-    mainClassName = "$group.CGLocal"
+    mainClassName = "$group.MainKt"
 }
 
 repositories {
@@ -25,8 +26,15 @@ dependencies {
     implementation("org.java-websocket:Java-WebSocket:1.4.1")
     implementation("org.json:json:20190722")
     implementation("name.mitterdorfer.perlock:perlock-core:0.3.1")
+    implementation("org.koin:koin-core:2.1.5")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    withType<ShadowJar> {
+        archiveFileName.set("cg-local-app.jar")
+    }
 }
