@@ -28,7 +28,9 @@ import javax.swing.JFrame
 import javax.swing.SwingUtilities
 import kotlin.concurrent.schedule
 
-class ConnectedController : KLogging() {
+class ConnectedController {
+    companion object : KLogging()
+
     private val frame: CGLocal by koin.inject()
     private val server: Server by koin.inject()
     private val config: Config by koin.inject()

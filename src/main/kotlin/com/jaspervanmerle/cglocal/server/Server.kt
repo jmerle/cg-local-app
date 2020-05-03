@@ -2,7 +2,6 @@ package com.jaspervanmerle.cglocal.server
 
 import com.jaspervanmerle.cglocal.Constants
 import com.jaspervanmerle.cglocal.controller.ConnectedController
-import com.jaspervanmerle.cglocal.util.errorAndExit
 import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.util.setStatus
 import mu.KLogging
@@ -10,7 +9,6 @@ import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
 import org.json.JSONObject
-import java.net.BindException
 import java.net.InetSocketAddress
 import javax.swing.SwingUtilities
 
@@ -39,10 +37,6 @@ class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
 
     override fun onError(conn: WebSocket?, ex: Exception) {
         logger.error(ex) { "${conn?.remoteSocketAddress ?: "Something"} threw an exception" }
-
-        if (ex is BindException) {
-            errorAndExit("Could not start websocket server on port ${Constants.WEB_SOCKET_PORT}.\nPlease make sure nothing else is running on the port.")
-        }
     }
 
     override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {

@@ -57,8 +57,3 @@ fun openBrowser(url: String) {
         }
     }
 }
-
-fun errorAndExit(message: String) {
-    JOptionPane.showMessageDialog(null, message, "CG Local", JOptionPane.ERROR_MESSAGE)
-    exitProcess(1)
-}

@@ -5,7 +5,9 @@ import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.util.setStatus
 import mu.KLogging
 
-class MainController : KLogging() {
+class MainController {
+    companion object : KLogging()
+
     private val server: Server by koin.inject()
 
     fun start() {
