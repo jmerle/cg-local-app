@@ -19,6 +19,14 @@ abstract class View : JPanel {
     constructor(layoutConstraints: String = "", columnConstraints: String = "", rowConstraints: String = "")
         : this(MigLayout(layoutConstraints, columnConstraints, rowConstraints))
 
+    open fun onShow() {
+        // Called when the view is placed in the center with setCenter()
+    }
+
+    open fun onHide() {
+        // Called when the view is removed from the center with setCenter()
+    }
+
     protected fun JPanel.label(text: String, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
         val formattedText = if ("</font>" in text) {
             "<html>$text</html>"

@@ -30,17 +30,22 @@ class SettingsController {
     fun toggleSettings() {
         if (settingsClosed) {
             setCenter(SettingsView::class)
-            icon = openedIcon
-            settingsClosed = false
         } else {
             if (server.connected) {
                 setCenter(ConnectedView::class)
             } else {
                 setCenter(DisconnectedView::class)
             }
-
-            icon = closedIcon
-            settingsClosed = true
         }
+    }
+
+    fun setSettingsOpened() {
+        icon = openedIcon
+        settingsClosed = false
+    }
+
+    fun setSettingsClosed() {
+        icon = closedIcon
+        settingsClosed = true
     }
 }

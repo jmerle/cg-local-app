@@ -1,7 +1,6 @@
 package com.jaspervanmerle.cglocal.view.center
 
 import com.jaspervanmerle.cglocal.Config
-import com.jaspervanmerle.cglocal.Constants
 import com.jaspervanmerle.cglocal.controller.SettingsController
 import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.view.View
@@ -37,6 +36,14 @@ class SettingsView : View("wrap 1, insets 10") {
             "Ask me" to "ask",
             "Upload" to "upload"
         ))
+    }
+
+    override fun onShow() {
+        settingsController.setSettingsOpened()
+    }
+
+    override fun onHide() {
+        settingsController.setSettingsClosed()
     }
 
     private fun <T> JPanel.options(title: String, property: KMutableProperty<T>, options: Map<String, T>) {

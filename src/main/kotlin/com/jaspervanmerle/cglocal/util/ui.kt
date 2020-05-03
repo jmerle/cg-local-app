@@ -3,6 +3,7 @@ package com.jaspervanmerle.cglocal.util
 import com.jaspervanmerle.cglocal.CGLocal
 import com.jaspervanmerle.cglocal.controller.StatusController
 import com.jaspervanmerle.cglocal.view.MainView
+import com.jaspervanmerle.cglocal.view.View
 import mu.KotlinLogging
 import java.awt.BorderLayout
 import java.awt.Color
@@ -15,7 +16,7 @@ import kotlin.system.exitProcess
 
 val logger = KotlinLogging.logger {}
 
-fun <T : JPanel> setCenter(newCenter: KClass<T>, parent: KClass<*> = MainView::class) {
+fun <T : View> setCenter(newCenter: KClass<T>, parent: KClass<*> = MainView::class) {
     if (CGLocal.stopping) {
         return
     }
@@ -23,7 +24,7 @@ fun <T : JPanel> setCenter(newCenter: KClass<T>, parent: KClass<*> = MainView::c
     logger.info("Placing ${newCenter.simpleName} in the center of ${parent.simpleName}")
 
     val parentPanel = koin.get(parent) as JPanel
-    val newCenterPanel = koin.get(newCenter) as JPanel
+    val newCenterPanel = koin.get(newCenter) as View
 
     val parentLayout = parentPanel.layout as BorderLayout
     val currentCenterPanel = parentLayout.getLayoutComponent(BorderLayout.CENTER)
@@ -31,11 +32,17 @@ fun <T : JPanel> setCenter(newCenter: KClass<T>, parent: KClass<*> = MainView::c
         parentPanel.remove(currentCenterPanel)
         parentPanel.revalidate()
         parentPanel.repaint()
+
+        if (currentCenterPanel is View) {
+            currentCenterPanel.onHide()
+        }
     }
 
     parentPanel.add(newCenterPanel, BorderLayout.CENTER)
     parentPanel.revalidate()
     parentPanel.repaint()
+
+    newCenterPanel.onShow()
 }
 
 fun setStatus(status: String) {
