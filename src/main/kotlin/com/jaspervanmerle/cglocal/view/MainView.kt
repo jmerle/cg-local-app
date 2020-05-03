@@ -1,5 +1,6 @@
 package com.jaspervanmerle.cglocal.view
 
+import com.jaspervanmerle.cglocal.Constants
 import com.jaspervanmerle.cglocal.controller.MainController
 import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.view.center.DisconnectedView
@@ -16,7 +17,7 @@ class MainView : JPanel() {
 
     init {
         layout = BorderLayout()
-        preferredSize = Dimension(400, 500)
+        preferredSize = Dimension(Constants.WIDTH, Constants.HEIGHT)
 
         add(menuView, BorderLayout.NORTH)
         add(disconnectedView, BorderLayout.CENTER)

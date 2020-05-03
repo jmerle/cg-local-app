@@ -1,12 +1,16 @@
 package com.jaspervanmerle.cglocal.util
 
+import java.awt.GridBagLayout
 import javax.swing.JButton
-import javax.swing.JFrame
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-fun frame(title: String, init: JFrame.() -> Unit = {}) = JFrame(title).apply(init)
-fun panel(init: JPanel.() -> Unit = {}) = JPanel().apply(init)
+fun JPanel.center(block: JPanel.() -> Unit) {
+    layout = GridBagLayout()
+    val content = JPanel()
+    add(content)
+    content.block()
+}
 
 fun JPanel.label(label: String, constraints: Any? = null, init: JLabel.() -> Unit = {}) =
     JLabel(label).apply(init).also {
@@ -14,7 +18,7 @@ fun JPanel.label(label: String, constraints: Any? = null, init: JLabel.() -> Uni
     }
 
 fun JPanel.label(label: ObservableProperty<String>, constraints: Any? = null, init: JLabel.() -> Unit = {}) =
-    label(label.value, constraints).also { component ->
+    label(label.value, constraints, init).also { component ->
         label.observe {
             component.text = it
         }
