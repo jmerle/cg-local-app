@@ -14,10 +14,10 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 
 abstract class View : JPanel {
-    constructor(layoutConstraints: String = "", columnConstraints: String = "", rowConstraints: String = "")
-        : super(MigLayout(layoutConstraints, columnConstraints, rowConstraints))
-
     constructor(layoutManager: LayoutManager) : super(layoutManager)
+
+    constructor(layoutConstraints: String = "", columnConstraints: String = "", rowConstraints: String = "")
+        : this(MigLayout(layoutConstraints, columnConstraints, rowConstraints))
 
     protected fun JPanel.label(text: String, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
         val formattedText = if ("</font>" in text) {
