@@ -1,5 +1,5 @@
 # 1.2.0 - TBD
-- Moved the UI from JavaFX with TornadoFX to Swing. This change makes the application work with Java versions newer than 8 and means it is no longer required to have a JRE or JDK with JavaFX available.
+- Moved the UI from JavaFX with TornadoFX to Swing. This change makes the application work with Java versions newer than 8 and means it is no longer required to run the application with a JRE or a JDK with JavaFX available.
 - Fixed a bug where the server would sometimes not be able to bind to its port if the application was quit a short time ago.
 
 # 1.1.1 - October 8th, 2019
