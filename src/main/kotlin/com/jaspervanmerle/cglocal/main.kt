@@ -16,10 +16,14 @@ import com.jaspervanmerle.cglocal.view.center.connected.ConnectedMenuView
 import com.jaspervanmerle.cglocal.view.center.connected.FirstActionFragment
 import com.jaspervanmerle.cglocal.view.center.connected.SelectFileFragment
 import com.jaspervanmerle.cglocal.view.center.connected.SetupCompletedFragment
+import jiconfont.icons.font_awesome.FontAwesome
+import jiconfont.swing.IconFontSwing
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 fun main() {
+    IconFontSwing.register(FontAwesome.getIconFont())
+
     val module = module {
         single { CGLocal() }
         single { Server() }

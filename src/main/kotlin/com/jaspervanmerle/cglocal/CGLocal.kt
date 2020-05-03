@@ -3,8 +3,6 @@ package com.jaspervanmerle.cglocal
 import com.jaspervanmerle.cglocal.controller.MainController
 import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.view.MainView
-import jiconfont.icons.font_awesome.FontAwesome
-import jiconfont.swing.IconFontSwing
 import mu.KLogging
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
@@ -82,8 +80,6 @@ class CGLocal : JFrame() {
     }
 
     private fun configureFrame() {
-        IconFontSwing.register(FontAwesome.getIconFont())
-
         title = "CG Local"
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         isResizable = false

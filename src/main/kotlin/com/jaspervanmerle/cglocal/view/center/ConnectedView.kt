@@ -7,6 +7,6 @@ class ConnectedView : View() {
     init {
         layout = BorderLayout()
 
-        label("Connected", BorderLayout.NORTH)
+        label("Connected", BorderLayout.CENTER)
     }
 }
