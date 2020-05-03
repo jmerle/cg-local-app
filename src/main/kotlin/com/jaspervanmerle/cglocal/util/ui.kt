@@ -5,10 +5,7 @@ import com.jaspervanmerle.cglocal.controller.StatusController
 import com.jaspervanmerle.cglocal.view.MainView
 import mu.KotlinLogging
 import java.awt.BorderLayout
-import java.awt.Desktop
-import java.net.URL
 import javax.swing.JPanel
-import kotlin.concurrent.thread
 import kotlin.reflect.KClass
 
 val logger = KotlinLogging.logger {}
@@ -43,15 +40,4 @@ fun setStatus(status: String) {
 
     logger.info("Changing status to \"$status\"")
     koin.get<StatusController>().status = status
-}
-
-fun openBrowser(url: String) {
-    if (Desktop.isDesktopSupported()) {
-        // On Linux, getDesktop().browse() hangs the application
-        // This issue can be fixed by running the call in a separate thread
-        thread {
-            logger.info("Opening $url")
-            Desktop.getDesktop().browse(URL(url).toURI())
-        }
-    }
 }
