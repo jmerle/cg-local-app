@@ -7,7 +7,7 @@ import com.jaspervanmerle.cglocal.view.center.DisconnectedView
 import java.awt.BorderLayout
 import java.awt.Dimension
 
-class MainView : View() {
+class MainView : View(BorderLayout()) {
     private val mainController: MainController by koin.inject()
 
     private val menuView: MenuView by koin.inject()
@@ -15,7 +15,6 @@ class MainView : View() {
     private val statusView: StatusView by koin.inject()
 
     init {
-        layout = BorderLayout()
         preferredSize = Dimension(Constants.WIDTH, Constants.HEIGHT)
 
         add(menuView, BorderLayout.NORTH)

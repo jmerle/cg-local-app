@@ -6,20 +6,16 @@ import com.jaspervanmerle.cglocal.util.koin
 import java.awt.Dimension
 import java.awt.Font
 
-class StatusView : View() {
+class StatusView : View("align center") {
     private val controller: StatusController by koin.inject()
 
     init {
         preferredSize = Dimension(Constants.WIDTH, 30)
         background = Constants.BLACK
 
-        center {
-            background = Constants.BLACK
-
-            label(controller.statusProperty) {
-                foreground = Constants.WHITE
-                font = Font(font.name, Font.PLAIN, 14)
-            }
+        label(controller.statusProperty) {
+            foreground = Constants.WHITE
+            font = Font(font.name, Font.PLAIN, 14)
         }
     }
 }

@@ -2,20 +2,20 @@ package com.jaspervanmerle.cglocal.view
 
 import com.jaspervanmerle.cglocal.util.ObservableProperty
 import com.jaspervanmerle.cglocal.view.button.IconButton
+import com.jaspervanmerle.cglocal.view.button.TextButton
+import net.miginfocom.swing.MigLayout
 import java.awt.Color
-import java.awt.GridBagLayout
+import java.awt.LayoutManager
 import javax.swing.Icon
 import javax.swing.JButton
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-abstract class View : JPanel() {
-    protected fun JPanel.center(block: JPanel.() -> Unit) {
-        layout = GridBagLayout()
-        val content = JPanel()
-        add(content)
-        content.block()
-    }
+abstract class View : JPanel {
+    constructor(layoutConstraints: String = "", columnConstraints: String = "", rowConstraints: String = "")
+        : super(MigLayout(layoutConstraints, columnConstraints, rowConstraints))
+
+    constructor(layoutManager: LayoutManager) : super(layoutManager)
 
     protected fun JPanel.label(label: String, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
         val formattedLabel = if ("</font>" in label) {
@@ -37,16 +37,30 @@ abstract class View : JPanel() {
         }
     }
 
+    protected fun JPanel.button(text: String, constraints: Any? = null, init: JButton.() -> Unit = {}): JButton {
+        return TextButton(text).apply(init).also {
+            add(it, constraints)
+        }
+    }
+
     protected fun JPanel.button(icon: Icon, constraints: Any? = null, init: JButton.() -> Unit = {}): JButton {
         return IconButton(icon).apply(init).also {
             add(it, constraints)
         }
     }
 
-    protected fun JPanel.button(icon: ObservableProperty<Icon>, constraints: Any? = null, init: JButton.() -> Unit = {}): JButton {
-        return button(icon.value, constraints, init).also { component ->
-            icon.observe {
-                component.icon = it
+    protected fun JPanel.button(prop: ObservableProperty<*>, constraints: Any? = null, init: JButton.() -> Unit = {}): JButton {
+        return if (prop.value is String) {
+            button(prop.value as String, constraints, init).also { component ->
+                prop.observe {
+                    component.text = it as String
+                }
+            }
+        } else {
+            button(prop.value as Icon, constraints, init).also { component ->
+                prop.observe {
+                    component.icon = it as Icon
+                }
             }
         }
     }
