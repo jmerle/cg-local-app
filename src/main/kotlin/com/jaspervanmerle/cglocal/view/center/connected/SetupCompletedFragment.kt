@@ -1,9 +1,8 @@
 package com.jaspervanmerle.cglocal.view.center.connected
 
-import com.jaspervanmerle.cglocal.util.label
-import javax.swing.JPanel
+import com.jaspervanmerle.cglocal.view.View
 
-class SetupCompletedFragment : JPanel() {
+class SetupCompletedFragment : View() {
     init {
         label("Setup Completed")
     }

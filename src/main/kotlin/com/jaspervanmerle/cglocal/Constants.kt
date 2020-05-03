@@ -12,4 +12,5 @@ object Constants {
     val BLACK = Color(37, 46, 56)
     val ORANGE = Color(242, 187, 19)
     val WHITE = Color(255, 255, 255)
+    val TRANSPARENT = Color(255, 255, 255, 0)
 }

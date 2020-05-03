@@ -1,9 +1,8 @@
 package com.jaspervanmerle.cglocal.view.center.connected
 
-import com.jaspervanmerle.cglocal.util.label
-import javax.swing.JPanel
+import com.jaspervanmerle.cglocal.view.View
 
-class SelectFileFragment : JPanel() {
+class SelectFileFragment : View() {
     init {
         label("Select File")
     }

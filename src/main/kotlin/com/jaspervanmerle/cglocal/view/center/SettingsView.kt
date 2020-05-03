@@ -1,9 +1,8 @@
 package com.jaspervanmerle.cglocal.view.center
 
-import com.jaspervanmerle.cglocal.util.label
-import javax.swing.JPanel
+import com.jaspervanmerle.cglocal.view.View
 
-class SettingsView : JPanel() {
+class SettingsView : View() {
     init {
         label("Settings")
     }

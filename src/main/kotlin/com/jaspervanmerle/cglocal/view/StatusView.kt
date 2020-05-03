@@ -2,14 +2,11 @@ package com.jaspervanmerle.cglocal.view
 
 import com.jaspervanmerle.cglocal.Constants
 import com.jaspervanmerle.cglocal.controller.StatusController
-import com.jaspervanmerle.cglocal.util.center
 import com.jaspervanmerle.cglocal.util.koin
-import com.jaspervanmerle.cglocal.util.label
 import java.awt.Dimension
 import java.awt.Font
-import javax.swing.JPanel
 
-class StatusView : JPanel() {
+class StatusView : View() {
     private val controller: StatusController by koin.inject()
 
     init {
@@ -21,7 +18,7 @@ class StatusView : JPanel() {
 
             label(controller.statusProperty) {
                 foreground = Constants.WHITE
-                font = Font(font.name, font.style, 14)
+                font = Font(font.name, Font.PLAIN, 14)
             }
         }
     }

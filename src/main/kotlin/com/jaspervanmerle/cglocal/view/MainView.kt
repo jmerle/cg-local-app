@@ -6,9 +6,8 @@ import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.view.center.DisconnectedView
 import java.awt.BorderLayout
 import java.awt.Dimension
-import javax.swing.JPanel
 
-class MainView : JPanel() {
+class MainView : View() {
     private val mainController: MainController by koin.inject()
 
     private val menuView: MenuView by koin.inject()

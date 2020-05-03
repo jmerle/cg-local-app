@@ -7,11 +7,9 @@ import mu.KotlinLogging
 import java.awt.BorderLayout
 import java.awt.Desktop
 import java.net.URL
-import javax.swing.JOptionPane
 import javax.swing.JPanel
 import kotlin.concurrent.thread
 import kotlin.reflect.KClass
-import kotlin.system.exitProcess
 
 val logger = KotlinLogging.logger {}
 
