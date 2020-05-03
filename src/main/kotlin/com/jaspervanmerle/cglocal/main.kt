@@ -4,6 +4,8 @@ import com.jaspervanmerle.cglocal.controller.ConnectedController
 import com.jaspervanmerle.cglocal.controller.MainController
 import com.jaspervanmerle.cglocal.controller.SettingsController
 import com.jaspervanmerle.cglocal.controller.StatusController
+import com.jaspervanmerle.cglocal.server.Server
+import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.view.MainView
 import com.jaspervanmerle.cglocal.view.MenuView
 import com.jaspervanmerle.cglocal.view.StatusView
@@ -18,7 +20,16 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 fun main() {
-    val mvcModule = module {
+    val module = module {
+        single { CGLocal() }
+        single { Server() }
+        single { Config() }
+
+        single { MainController() }
+        single { StatusController() }
+        single { ConnectedController() }
+        single { SettingsController() }
+
         single { MainView() }
         single { MenuView() }
         single { StatusView() }
@@ -30,16 +41,11 @@ fun main() {
         factory { FirstActionFragment() }
         factory { SelectFileFragment() }
         factory { SetupCompletedFragment() }
-
-        single { MainController() }
-        single { StatusController() }
-        single { ConnectedController() }
-        single { SettingsController() }
     }
 
     startKoin {
-        modules(mvcModule)
+        modules(module)
     }
 
-    CGLocal().start()
+    koin.get<CGLocal>().start()
 }

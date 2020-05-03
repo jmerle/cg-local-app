@@ -1,44 +1,64 @@
 package com.jaspervanmerle.cglocal
 
+import com.jaspervanmerle.cglocal.controller.MainController
+import com.jaspervanmerle.cglocal.util.errorAndExit
 import com.jaspervanmerle.cglocal.util.koin
-import com.jaspervanmerle.cglocal.util.frame
 import com.jaspervanmerle.cglocal.view.MainView
+import jiconfont.icons.font_awesome.FontAwesome
+import jiconfont.swing.IconFontSwing
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import java.net.InetAddress
 import java.net.ServerSocket
 import javax.swing.JFrame
-import javax.swing.JOptionPane
-import kotlin.system.exitProcess
+import javax.swing.WindowConstants
+import kotlin.concurrent.thread
 
-class CGLocal {
+class CGLocal : JFrame() {
+    companion object {
+        var stopping = false
+    }
+
     private lateinit var instanceSocket: ServerSocket
 
     private val mainView: MainView by koin.inject()
+    private val mainController: MainController by koin.inject()
 
     fun start() {
-        ensureSingleInstance()
-
-        frame("CG Local") {
-            defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            isResizable = false
-
-            contentPane = mainView
-
-            pack()
-            isVisible = true
-            setLocationRelativeTo(null)
+        if (!isFirstInstance()) {
+            errorAndExit("Only one instance of CG Local can be running at a time.\nPlease use the running instance.")
         }
+
+        Runtime.getRuntime().addShutdownHook(thread(false) {
+            stop()
+        })
+
+        addWindowListener(object : WindowAdapter() {
+            override fun windowClosing(e: WindowEvent?) {
+                stop()
+            }
+        })
+
+        IconFontSwing.register(FontAwesome.getIconFont())
+
+        title = "CG Local"
+        defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
+        isResizable = false
+
+        contentPane = mainView
+
+        pack()
+        isVisible = true
+        setLocationRelativeTo(null)
     }
 
-    private fun ensureSingleInstance() {
-        if (isFirstInstance()) {
+    private fun stop() {
+        if (stopping) {
             return
         }
 
-        val title = "CG Local"
-        val message = "Only one instance of CG Local can be running at a time.\nPlease use the running instance."
-        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE)
-
-        exitProcess(1)
+        stopping = true
+        mainController.stop()
     }
 
     private fun isFirstInstance(): Boolean {

@@ -12,18 +12,16 @@ class ObservableProperty<T>(var value: T) {
     operator fun setValue(thisRef: Any, property: KProperty<*>, newValue: T) {
         val valueChanged = value != newValue
 
-        println("$value -> $newValue")
         value = newValue
 
         if (valueChanged) {
-            println(observers.size)
             for (observer in observers) {
                 observer(newValue)
             }
         }
     }
 
-    fun observe(listener: (newValue: T) -> Unit) {
-        observers += listener
+    fun observe(observer: (newValue: T) -> Unit) {
+        observers.add(observer)
     }
 }

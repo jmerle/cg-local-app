@@ -1,11 +1,15 @@
 package com.jaspervanmerle.cglocal
 
+import com.jaspervanmerle.cglocal.server.Server
+import com.jaspervanmerle.cglocal.util.koin
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.prefs.Preferences
 
-object Config {
-    val prefs = Preferences.userNodeForPackage(CGLocal::class.java)
+class Config {
+    private val server: Server by koin.inject()
+
+    private val prefs = Preferences.userNodeForPackage(CGLocal::class.java)
 
     var oneFileForAllPuzzles: Boolean
         get() = prefs.getBoolean("oneFileForAllPuzzles", false)
@@ -19,7 +23,7 @@ object Config {
         get() = prefs.getBoolean("twoWayDataBinding", false)
         set(value) {
             prefs.putBoolean("twoWayDataBinding", value)
-            // Server.connectedSocket?.setReadOnly(!value)
+            server.setReadOnly(!value)
         }
 
     var defaultAction: String

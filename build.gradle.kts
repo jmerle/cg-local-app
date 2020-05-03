@@ -27,6 +27,8 @@ dependencies {
     implementation("org.json:json:20190722")
     implementation("name.mitterdorfer.perlock:perlock-core:0.3.1")
     implementation("org.koin:koin-core:2.1.5")
+    implementation("com.github.jiconfont:jiconfont-swing:1.0.0")
+    implementation("com.github.jiconfont:jiconfont-font_awesome:4.7.0.1")
 }
 
 tasks {
