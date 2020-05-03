@@ -1,6 +1,7 @@
 package com.jaspervanmerle.cglocal
 
 import com.jaspervanmerle.cglocal.controller.MainController
+import com.jaspervanmerle.cglocal.util.errorAndExit
 import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.view.MainView
 import mu.KLogging
@@ -9,10 +10,8 @@ import java.awt.event.WindowEvent
 import java.net.InetAddress
 import java.net.ServerSocket
 import javax.swing.JFrame
-import javax.swing.JOptionPane
 import javax.swing.WindowConstants
 import kotlin.concurrent.thread
-import kotlin.system.exitProcess
 
 class CGLocal : JFrame() {
     companion object : KLogging() {
@@ -37,13 +36,7 @@ class CGLocal : JFrame() {
             return
         }
 
-        logger.error("Only one instance of CG Local can be running at a time")
-
-        val title = "CG Local"
-        val message = "Only one instance of CG Local can be running at a time.\nPlease use the running instance."
-        JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE)
-
-        exitProcess(1)
+        errorAndExit("Only one instance of CG Local can be running at a time.\nPlease use the running instance.")
     }
 
     private fun isFirstInstance(): Boolean {

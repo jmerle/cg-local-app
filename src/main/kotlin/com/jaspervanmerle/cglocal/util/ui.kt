@@ -6,10 +6,12 @@ import com.jaspervanmerle.cglocal.view.MainView
 import mu.KotlinLogging
 import java.awt.BorderLayout
 import java.awt.Color
+import javax.swing.JOptionPane
 import javax.swing.JPanel
 import kotlin.math.min
 import kotlin.math.round
 import kotlin.reflect.KClass
+import kotlin.system.exitProcess
 
 val logger = KotlinLogging.logger {}
 
@@ -50,4 +52,10 @@ fun Color.manipulate(factor: Float): Color {
     val newGreen = min(round(green * factor).toInt(), 255)
     val newBlue = min(round(blue * factor).toInt(), 255)
     return Color(newRed, newGreen, newBlue, alpha)
+}
+
+fun errorAndExit(message: String) {
+    logger.error(message.substringBefore(".\n"))
+    JOptionPane.showMessageDialog(null, message, "CG Local", JOptionPane.ERROR_MESSAGE)
+    exitProcess(1)
 }
