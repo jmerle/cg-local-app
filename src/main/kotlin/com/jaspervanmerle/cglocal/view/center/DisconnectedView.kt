@@ -18,7 +18,7 @@ class DisconnectedView : View("wrap 1, insets 20, align center", "align center")
                 addActionListener {
                     val url = "https://www.codingame.com/"
 
-                    // On Linux getDesktop().browse() hangs the application
+                    // On Linux Desktop.getDesktop().browse() hangs the application
                     // This issue can be fixed by running the call in a separate thread
                     thread {
                         logger.info("Opening $url")
