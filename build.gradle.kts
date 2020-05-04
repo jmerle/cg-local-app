@@ -39,6 +39,6 @@ tasks {
     }
 
     withType<ShadowJar> {
-        archiveFileName.set("cg-local-app.jar")
+        archiveFileName.set("cg-local-app-${project.version}.jar")
     }
 }
