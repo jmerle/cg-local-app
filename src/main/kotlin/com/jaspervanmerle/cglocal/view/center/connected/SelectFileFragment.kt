@@ -17,7 +17,7 @@ class SelectFileFragment : View("wrap 1, insets 5, align center", "align center"
 
         if (config.isPreviouslySelected(connectedController.questionId)) {
             val path = config.getPreviouslySelectedFile(connectedController.questionId)
-            val formattedPath = if (path.length > 50) "…" + path.takeLast(50) else path
+            val formattedPath = if (path.length > 60) "…" + path.takeLast(60) else path
 
             label("Previously selected file:<br>$formattedPath") {
                 font = font.deriveFont(Font.PLAIN, 12f)
