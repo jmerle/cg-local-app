@@ -5,6 +5,7 @@ import com.jaspervanmerle.cglocal.util.errorAndExit
 import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.view.MainView
 import mu.KLogging
+import java.awt.Toolkit
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.net.InetAddress
@@ -76,6 +77,10 @@ class CGLocal : JFrame() {
         title = "CG Local"
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         isResizable = false
+
+        iconImages = arrayOf(16, 19, 20, 24, 32, 38, 48, 64, 96)
+            .map { this::class.java.classLoader.getResource("icons/icon-$it.png") }
+            .map { Toolkit.getDefaultToolkit().getImage(it) }
 
         contentPane = mainView
     }
