@@ -36,7 +36,7 @@ class ConnectedController {
     private val config: Config by koin.inject()
     private val connectedView: ConnectedView by koin.inject()
 
-    private val titleProperty = ObservableProperty("")
+    val titleProperty = ObservableProperty("")
     private var title by titleProperty
 
     private val firstActionDisabledProperty = ObservableProperty(false)

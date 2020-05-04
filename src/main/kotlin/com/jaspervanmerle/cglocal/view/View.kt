@@ -6,7 +6,6 @@ import com.jaspervanmerle.cglocal.view.button.IconButton
 import com.jaspervanmerle.cglocal.view.button.TextButton
 import net.miginfocom.swing.MigLayout
 import java.awt.Color
-import java.awt.Font
 import java.awt.LayoutManager
 import javax.swing.Icon
 import javax.swing.JButton
@@ -37,7 +36,6 @@ abstract class View : JPanel {
         return JLabel(formattedText)
             .apply {
                 foreground = Constants.BLACK
-                font = font.deriveFont(Font.BOLD, 14f)
             }
             .also(init)
             .also {

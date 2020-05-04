@@ -132,6 +132,10 @@ class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
         send(ServerMessageAction.ERROR, JSONObject(mapOf("message" to message)))
     }
 
+    fun closeConnectedSocket() {
+        connectedSocket?.close()
+    }
+
     private fun WebSocket.send(action: ServerMessageAction, payload: JSONObject = JSONObject()) {
         val message = ServerMessage(action, payload).toString()
 
