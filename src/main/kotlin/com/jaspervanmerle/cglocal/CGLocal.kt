@@ -82,6 +82,19 @@ class CGLocal : JFrame() {
             .map { this::class.java.classLoader.getResource("icons/icon-$it.png") }
             .map { Toolkit.getDefaultToolkit().getImage(it) }
 
+        try {
+            val toolkit = Toolkit.getDefaultToolkit()
+            val toolkitClass = toolkit::class.java
+            if (toolkitClass.name == "sun.awt.X11.XToolkit") {
+                logger.info("Setting application title, ignore the reflective access warning")
+                val awtAppClassName = toolkitClass.getDeclaredField("awtAppClassName")
+                awtAppClassName.isAccessible = true
+                awtAppClassName.set(toolkit, "CG Local")
+            }
+        } catch (err: Exception) {
+            // Do nothing
+        }
+
         contentPane = mainView
     }
 
