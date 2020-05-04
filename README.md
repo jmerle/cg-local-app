@@ -4,7 +4,7 @@
 [![Latest release](https://img.shields.io/github/v/release/jmerle/cg-local-app)](https://github.com/jmerle/cg-local-app/releases/latest)
 [![Total downloads](https://img.shields.io/github/downloads/jmerle/cg-local-app/total)](https://github.com/jmerle/cg-local-app/releases/latest)
 
-This application should be used together with [cg-local-ext](https://github.com/jmerle/cg-local-ext). The application watches the selected file and sends the source code to the browser extension when the file is changed.
+This application should be used together with [cg-local-ext](https://github.com/jmerle/cg-local-ext). The application watches the selected file and sends the source code to the browser extension when the file is changed. It also makes it easy to configure the CG Local's settings. See the [CodinGame topic](https://www.codingame.com/forum/t/cg-local/10359/1) for more information.
 
 ## Installation
 1. Download the latest jar file from the [releases](https://github.com/jmerle/cg-local-app/releases) page.
