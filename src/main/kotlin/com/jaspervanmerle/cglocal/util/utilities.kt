@@ -57,15 +57,15 @@ fun setStatus(status: String) {
     koin.get<StatusController>().status = status
 }
 
+fun errorAndExit(message: String) {
+    logger.error(message.substringBefore(".\n"))
+    JOptionPane.showMessageDialog(null, message, "CG Local", JOptionPane.ERROR_MESSAGE)
+    exitProcess(1)
+}
+
 fun Color.manipulate(factor: Float): Color {
     val newRed = min(round(red * factor).toInt(), 255)
     val newGreen = min(round(green * factor).toInt(), 255)
     val newBlue = min(round(blue * factor).toInt(), 255)
     return Color(newRed, newGreen, newBlue, alpha)
-}
-
-fun errorAndExit(message: String) {
-    logger.error(message.substringBefore(".\n"))
-    JOptionPane.showMessageDialog(null, message, "CG Local", JOptionPane.ERROR_MESSAGE)
-    exitProcess(1)
 }
