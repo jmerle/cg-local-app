@@ -85,8 +85,10 @@ class CGLocal : JFrame() {
         try {
             val toolkit = Toolkit.getDefaultToolkit()
             val toolkitClass = toolkit::class.java
+
             if (toolkitClass.name == "sun.awt.X11.XToolkit") {
                 logger.info("Setting application title, ignore the reflective access warning if it shows up")
+
                 val awtAppClassName = toolkitClass.getDeclaredField("awtAppClassName")
                 awtAppClassName.isAccessible = true
                 awtAppClassName.set(toolkit, "CG Local")
