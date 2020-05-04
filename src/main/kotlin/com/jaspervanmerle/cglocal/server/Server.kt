@@ -41,7 +41,7 @@ class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
         logger.error(ex) { "${conn?.remoteSocketAddress ?: "Something"} threw an exception" }
 
         if (ex is BindException) {
-            errorAndExit("Server could not bind to port ${Constants.WEB_SOCKET_PORT}.\nMake sure it is not being used by another application.")
+            errorAndExit("Server could not bind to port ${Constants.WEB_SOCKET_PORT}.<br>Make sure it is not being used by another application.")
         }
     }
 

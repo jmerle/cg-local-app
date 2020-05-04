@@ -27,13 +27,7 @@ abstract class View : JPanel {
     }
 
     protected fun JPanel.label(text: String, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
-        val formattedText = if ("</font>" in text) {
-            "<html>$text</html>"
-        } else {
-            text
-        }
-
-        return JLabel(formattedText)
+        return JLabel("<html><center>$text</center></html>")
             .apply {
                 foreground = Constants.BLACK
             }

@@ -36,7 +36,7 @@ class CGLocal : JFrame() {
             return
         }
 
-        errorAndExit("Only one instance of CG Local can be running at a time.\nPlease use the running instance.")
+        errorAndExit("Only one instance of CG Local can be running at a time.<br>Please use the running instance.")
     }
 
     private fun isFirstInstance(): Boolean {

@@ -7,13 +7,13 @@ import java.awt.Dimension
 import java.awt.Font
 
 class StatusView : View("align center") {
-    private val controller: StatusController by koin.inject()
+    private val statusController: StatusController by koin.inject()
 
     init {
         preferredSize = Dimension(Constants.WIDTH, 30)
         background = Constants.BLACK
 
-        label(controller.statusProperty) {
+        label(statusController.statusProperty) {
             foreground = Constants.WHITE
             font = font.deriveFont(Font.PLAIN, 14f)
         }

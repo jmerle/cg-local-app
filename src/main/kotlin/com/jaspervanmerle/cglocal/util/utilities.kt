@@ -58,8 +58,11 @@ fun setStatus(status: String) {
 }
 
 fun errorAndExit(message: String) {
-    logger.error(message.substringBefore(".\n"))
-    JOptionPane.showMessageDialog(null, message, "CG Local", JOptionPane.ERROR_MESSAGE)
+    val formattedMessage = "<html><center>$message</center></html>"
+
+    logger.error(message.substringBefore("."))
+    JOptionPane.showMessageDialog(null, formattedMessage, "CG Local", JOptionPane.ERROR_MESSAGE)
+
     exitProcess(1)
 }
 

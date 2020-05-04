@@ -42,7 +42,7 @@ class ConnectedController {
     private val firstActionDisabledProperty = ObservableProperty(false)
     private var firstActionDisabled by firstActionDisabledProperty
 
-    private var questionId = -1
+    var questionId = -1
     private var selectedFile = File("")
 
     private var watcher: PathWatcher? = null
@@ -74,12 +74,12 @@ class ConnectedController {
         setStatus("Listening on port ${Constants.WEB_SOCKET_PORT}")
     }
 
-    private fun usePreviouslySelectedFile() {
+    fun usePreviouslySelectedFile() {
         val path = config.getPreviouslySelectedFile(questionId)
         continueWithFile(File(path))
     }
 
-    private fun selectFile() {
+    fun selectFile() {
         val fileChooser = JFileChooser().apply {
             dialogTitle = "Select a file"
         }

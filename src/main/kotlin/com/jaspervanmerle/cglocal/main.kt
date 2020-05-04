@@ -20,8 +20,11 @@ import jiconfont.icons.font_awesome.FontAwesome
 import jiconfont.swing.IconFontSwing
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
+import javax.swing.UIManager
+import javax.swing.plaf.metal.MetalLookAndFeel
 
 fun main() {
+    UIManager.setLookAndFeel(MetalLookAndFeel::class.java.canonicalName)
     IconFontSwing.register(FontAwesome.getIconFont())
 
     val module = module {
