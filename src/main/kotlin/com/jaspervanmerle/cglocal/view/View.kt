@@ -49,20 +49,24 @@ abstract class View : JPanel {
     }
 
     protected fun JPanel.label(prop: ObservableProperty<*>, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
-        return if (prop.value is String) {
-            label(prop.value as String, constraints, init).also { component ->
-                prop.observe {
-                    component.text = it as String
+        return when (prop.value) {
+            is String -> {
+                label(prop.value as String, constraints, init).also { component ->
+                    prop.observe {
+                        component.text = it as String
+                    }
                 }
             }
-        } else if (prop.value is Icon) {
-            label(prop.value as Icon, constraints, init).also { component ->
-                prop.observe {
-                    component.icon = it as Icon
+            is Icon -> {
+                label(prop.value as Icon, constraints, init).also { component ->
+                    prop.observe {
+                        component.icon = it as Icon
+                    }
                 }
             }
-        } else {
-            throw IllegalArgumentException("prop should be an ObservableProperty<String> or an ObservableProperty<Icon>")
+            else -> {
+                throw IllegalArgumentException("prop should be an ObservableProperty<String> or an ObservableProperty<Icon>")
+            }
         }
     }
 
@@ -79,20 +83,24 @@ abstract class View : JPanel {
     }
 
     protected fun JPanel.button(prop: ObservableProperty<*>, constraints: Any? = null, init: JButton.() -> Unit = {}): JButton {
-        return if (prop.value is String) {
-            button(prop.value as String, constraints, init).also { component ->
-                prop.observe {
-                    component.text = it as String
+        return when (prop.value) {
+            is String -> {
+                button(prop.value as String, constraints, init).also { component ->
+                    prop.observe {
+                        component.text = it as String
+                    }
                 }
             }
-        } else if (prop.value is Icon) {
-            button(prop.value as Icon, constraints, init).also { component ->
-                prop.observe {
-                    component.icon = it as Icon
+            is Icon -> {
+                button(prop.value as Icon, constraints, init).also { component ->
+                    prop.observe {
+                        component.icon = it as Icon
+                    }
                 }
             }
-        } else {
-            throw IllegalArgumentException("prop should be an ObservableProperty<String> or an ObservableProperty<Icon>")
+            else -> {
+                throw IllegalArgumentException("prop should be an ObservableProperty<String> or an ObservableProperty<Icon>")
+            }
         }
     }
 
