@@ -26,9 +26,13 @@ class TextButton(text: String) : Button(text) {
         addChangeListener {
             background = if (model.isRollover) {
                 Constants.ORANGE.manipulate(0.9f)
+            } else if (!model.isEnabled) {
+                Constants.GRAY
             } else {
                 Constants.ORANGE
             }
+
+            foreground = Constants.BLACK
         }
     }
 }

@@ -39,11 +39,10 @@ class ConnectedController {
     val titleProperty = ObservableProperty("")
     private var title by titleProperty
 
-    private val firstActionDisabledProperty = ObservableProperty(false)
-    private var firstActionDisabled by firstActionDisabledProperty
+    private var firstActionDisabled = false
 
     var questionId = -1
-    private var selectedFile = File("")
+    var selectedFile = File("")
 
     private var watcher: PathWatcher? = null
     private var watcherExecutor: ExecutorService? = null
@@ -103,7 +102,7 @@ class ConnectedController {
         }
     }
 
-    private fun firstActionDownload() {
+    fun firstActionDownload() {
         firstActionDisabled = true
 
         server.getCode {
@@ -112,13 +111,13 @@ class ConnectedController {
         }
     }
 
-    private fun firstActionUpload() {
+    fun firstActionUpload() {
         firstActionDisabled = true
         server.updateCode(getSelectedFileCode(), false)
         setupCompleted()
     }
 
-    private fun firstActionChangeFile() {
+    fun firstActionChangeFile() {
         firstActionDisabled = true
         setCenter(SelectFileFragment::class, ConnectedView::class)
     }
