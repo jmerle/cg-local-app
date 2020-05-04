@@ -62,7 +62,10 @@ class ConnectedController {
 
         frame.extendedState = JFrame.NORMAL
         frame.isVisible = true
-        frame.toFront()
+
+        val currentAlwaysOnTop = frame.isAlwaysOnTop
+        frame.isAlwaysOnTop = true
+        frame.isAlwaysOnTop = currentAlwaysOnTop
     }
 
     fun disconnect() {
