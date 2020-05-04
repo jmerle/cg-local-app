@@ -167,14 +167,14 @@ class ConnectedController {
         setCenter(SetupCompletedFragment::class, ConnectedView::class)
     }
 
-    private fun forceDownload() {
+    fun forceDownload() {
         server.getCode {
             ignoreFileChange = 2
             selectedFile.writeText(it)
         }
     }
 
-    private fun forceUpload() {
+    fun forceUpload() {
         server.updateCode(getSelectedFileCode(), config.autoPlay)
     }
 

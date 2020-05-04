@@ -37,11 +37,32 @@ abstract class View : JPanel {
             }
     }
 
-    protected fun JPanel.label(text: ObservableProperty<String>, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
-        return label(text.value, constraints, init).also { component ->
-            text.observe {
-                component.text = it
+    protected fun JPanel.label(icon: Icon, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
+        return JLabel(icon)
+            .apply {
+                foreground = Constants.BLACK
             }
+            .also(init)
+            .also {
+                add(it, constraints)
+            }
+    }
+
+    protected fun JPanel.label(prop: ObservableProperty<*>, constraints: Any? = null, init: JLabel.() -> Unit = {}): JLabel {
+        return if (prop.value is String) {
+            label(prop.value as String, constraints, init).also { component ->
+                prop.observe {
+                    component.text = it as String
+                }
+            }
+        } else if (prop.value is Icon) {
+            label(prop.value as Icon, constraints, init).also { component ->
+                prop.observe {
+                    component.icon = it as Icon
+                }
+            }
+        } else {
+            throw IllegalArgumentException("prop should be an ObservableProperty<String> or an ObservableProperty<Icon>")
         }
     }
 
@@ -64,12 +85,14 @@ abstract class View : JPanel {
                     component.text = it as String
                 }
             }
-        } else {
+        } else if (prop.value is Icon) {
             button(prop.value as Icon, constraints, init).also { component ->
                 prop.observe {
                     component.icon = it as Icon
                 }
             }
+        } else {
+            throw IllegalArgumentException("prop should be an ObservableProperty<String> or an ObservableProperty<Icon>")
         }
     }
 

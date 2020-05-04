@@ -15,7 +15,7 @@ class FirstActionFragment : View("wrap 1, insets 5, align center", "align center
             font = font.deriveFont(Font.BOLD, 16f)
         }
 
-        label("Choose your first action:") {
+        label("Choose your first action") {
             font = font.deriveFont(Font.PLAIN, 14f)
         }
 

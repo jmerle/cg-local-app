@@ -22,7 +22,7 @@ class ConnectedMenuView : View("insets 0 10 0 10, aligny center", "[grow]") {
             font = font.deriveFont(Font.BOLD, 20f)
         }
 
-        button(IconFontSwing.buildIcon(FontAwesome.TIMES, 20.0f, Constants.BLACK), "right") {
+        button(IconFontSwing.buildIcon(FontAwesome.TIMES, 20f, Constants.BLACK), "right") {
             addActionListener {
                 server.closeConnectedSocket()
             }

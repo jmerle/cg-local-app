@@ -15,8 +15,8 @@ import javax.swing.Icon
 class SettingsController {
     private val server: Server by koin.inject()
 
-    private val closedIcon = IconFontSwing.buildIcon(FontAwesome.COG, 26.0f, Constants.WHITE)
-    private val openedIcon = IconFontSwing.buildIcon(FontAwesome.HOME, 26.0f, Constants.WHITE)
+    private val closedIcon = IconFontSwing.buildIcon(FontAwesome.COG, 26f, Constants.WHITE)
+    private val openedIcon = IconFontSwing.buildIcon(FontAwesome.HOME, 26f, Constants.WHITE)
 
     val iconProperty = ObservableProperty<Icon>(closedIcon)
     private var icon by iconProperty
