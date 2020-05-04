@@ -1,0 +1,15 @@
+strategy:
+  matrix:
+    jdk8:
+      jdkVersion: '1.8'
+    jdk11:
+      jdkVersion: '1.11'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: Gradle@2
+    displayName: Build
+    inputs:
+      jdkVersionOption: $(jdkVersion)
