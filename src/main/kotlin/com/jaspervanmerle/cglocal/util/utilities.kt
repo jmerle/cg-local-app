@@ -5,6 +5,7 @@ import com.jaspervanmerle.cglocal.controller.StatusController
 import com.jaspervanmerle.cglocal.view.MainView
 import com.jaspervanmerle.cglocal.view.View
 import mu.KotlinLogging
+import org.koin.core.context.KoinContextHandler
 import java.awt.BorderLayout
 import java.awt.Color
 import javax.swing.JOptionPane
@@ -14,7 +15,9 @@ import kotlin.math.round
 import kotlin.reflect.KClass
 import kotlin.system.exitProcess
 
-val logger = KotlinLogging.logger {}
+private val logger = KotlinLogging.logger {}
+
+val koin by lazy { KoinContextHandler.get() }
 
 fun <T : View> setCenter(newCenter: KClass<T>, parent: KClass<*> = MainView::class) {
     if (CGLocal.stopping) {
