@@ -6,10 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        javaVersion: [8, 11]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
