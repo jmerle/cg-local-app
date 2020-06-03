@@ -1,6 +1,6 @@
 # CG Local Application
 
-[![Build Status](https://dev.azure.com/jmerle/cg-local-app/_apis/build/status/Build?branchName=master)](https://dev.azure.com/jmerle/cg-local-app/_build/latest?definitionId=30&branchName=master)
+[![Build Status](https://github.com/jmerle/cg-local-app/workflows/Build/badge.svg)](https://github.com/jmerle/cg-local-app/actions?query=workflow%3ABuild)
 [![Latest release](https://img.shields.io/github/v/release/jmerle/cg-local-app)](https://github.com/jmerle/cg-local-app/releases)
 [![Total downloads](https://img.shields.io/github/downloads/jmerle/cg-local-app/total)](https://github.com/jmerle/cg-local-app/releases)
 
