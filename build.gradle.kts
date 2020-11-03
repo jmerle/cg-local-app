@@ -12,6 +12,7 @@ version = "1.2.0"
 
 application {
     mainClass.set("$group.MainKt")
+    mainClassName = mainClass.get()
 }
 
 repositories {
