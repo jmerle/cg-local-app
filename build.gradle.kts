@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.4.10"
-    id("com.github.johnrengelman.shadow") version "6.1.0"
+    kotlin("jvm") version "1.5.30"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
 }
 
 group = "com.jaspervanmerle.cglocal"
@@ -15,20 +15,25 @@ application {
     mainClassName = mainClass.get()
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    implementation("io.github.microutils:kotlin-logging:2.0.3")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
+    implementation("io.github.microutils:kotlin-logging:2.0.11")
+    implementation("ch.qos.logback:logback-classic:1.2.5")
     implementation("com.mihnita:color-loggers:1.0.5")
-    implementation("org.java-websocket:Java-WebSocket:1.5.1")
-    implementation("org.json:json:20200518")
+    implementation("org.java-websocket:Java-WebSocket:1.5.2")
+    implementation("org.json:json:20210307")
     implementation("name.mitterdorfer.perlock:perlock-core:0.3.1")
-    implementation("org.koin:koin-core:2.1.6")
+    implementation("io.insert-koin:koin-core:3.1.2")
     implementation("com.github.jiconfont:jiconfont-swing:1.0.1")
     implementation("com.github.jiconfont:jiconfont-font_awesome:4.7.0.1")
     implementation("com.miglayout:miglayout:3.7.4")
