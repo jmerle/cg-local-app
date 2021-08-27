@@ -129,37 +129,38 @@ class ConnectedController {
         watcherExecutor = Executors.newFixedThreadPool(1)
         val factory = PathWatcherFactory(watcherExecutor)
 
-        watcher = factory.createNonRecursiveWatcher(Paths.get(selectedFile.parent)) { eventKind: EventKind, path: Path ->
-            logger.info("Path: $path")
-            logger.info("Event kind: $eventKind")
+        watcher =
+            factory.createNonRecursiveWatcher(Paths.get(selectedFile.parent)) { eventKind: EventKind, path: Path ->
+                logger.info("Path: $path")
+                logger.info("Event kind: $eventKind")
 
-            if (path == selectedFile.toPath()) {
-                when (eventKind) {
-                    EventKind.CREATE -> {
-                        SwingUtilities.invokeLater {
-                            onSelectedFileChange()
-                        }
-                    }
-                    EventKind.MODIFY -> {
-                        SwingUtilities.invokeLater {
-                            onSelectedFileChange()
-                        }
-                    }
-                    EventKind.DELETE -> {
-                        val timer = Timer()
-                        timer.schedule(250) {
+                if (path == selectedFile.toPath()) {
+                    when (eventKind) {
+                        EventKind.CREATE -> {
                             SwingUtilities.invokeLater {
-                                onSelectedFileDeleted()
-                                timer.cancel()
-                                timer.purge()
+                                onSelectedFileChange()
                             }
                         }
-                    }
-                    else -> {
+                        EventKind.MODIFY -> {
+                            SwingUtilities.invokeLater {
+                                onSelectedFileChange()
+                            }
+                        }
+                        EventKind.DELETE -> {
+                            val timer = Timer()
+                            timer.schedule(250) {
+                                SwingUtilities.invokeLater {
+                                    onSelectedFileDeleted()
+                                    timer.cancel()
+                                    timer.purge()
+                                }
+                            }
+                        }
+                        else -> {
+                        }
                     }
                 }
             }
-        }
 
         watcher?.start()
 
@@ -177,8 +178,8 @@ class ConnectedController {
         }
     }
 
-    fun forceUpload() {
-        server.updateCode(getSelectedFileCode(), config.autoPlay)
+    fun forceUpload(forcePlay: Boolean = false) {
+        server.updateCode(getSelectedFileCode(), forcePlay || config.autoPlay)
     }
 
     fun onEditorChange(code: String) {

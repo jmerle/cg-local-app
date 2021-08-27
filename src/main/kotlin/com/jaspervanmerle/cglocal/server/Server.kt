@@ -7,19 +7,13 @@ import com.jaspervanmerle.cglocal.util.koin
 import com.jaspervanmerle.cglocal.util.setStatus
 import mu.KLogging
 import org.java_websocket.WebSocket
-import org.java_websocket.handshake.ClientHandshake
-import org.java_websocket.server.WebSocketServer
 import org.json.JSONObject
 import java.net.BindException
-import java.net.InetSocketAddress
+import java.nio.ByteBuffer
 import javax.swing.SwingUtilities
 
-class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
+class Server : HttpWsServer(Constants.WEB_SOCKET_PORT) {
     companion object : KLogging()
-
-    init {
-        isReuseAddr = true
-    }
 
     private var connectedSocket: WebSocket? = null
     private val connectedController: ConnectedController by koin.inject()
@@ -30,40 +24,40 @@ class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
     private val codeCallbacks = ArrayList<(code: String) -> Unit>()
 
     override fun onStart() {
-        logger.info("Started listening on port $port")
+        logger.info("Started listening on port ${Constants.WEB_SOCKET_PORT}")
 
         SwingUtilities.invokeLater {
             setStatus("Listening on port ${Constants.WEB_SOCKET_PORT}")
         }
     }
 
-    override fun onError(conn: WebSocket?, ex: Exception) {
-        logger.error(ex) { "${conn?.remoteSocketAddress ?: "Something"} threw an exception" }
+    override fun onError(connection: WebSocket?, e: Exception) {
+        logger.error(e) { "${connection?.remoteSocketAddress ?: "Something"} threw an exception" }
 
-        if (ex is BindException) {
+        if (e is BindException) {
             errorAndExit("Server could not bind to port ${Constants.WEB_SOCKET_PORT}.<br>Make sure it is not being used by another application.")
         }
     }
 
-    override fun onOpen(conn: WebSocket, handshake: ClientHandshake) {
-        logger.info("${conn.remoteSocketAddress} opened a connected")
+    override fun onWsOpen(connection: WebSocket) {
+        logger.info("${connection.remoteSocketAddress} opened a connected")
 
         if (connectedSocket == null) {
-            logger.info("Accepting ${conn.remoteSocketAddress}")
+            logger.info("Accepting ${connection.remoteSocketAddress}")
 
-            connectedSocket = conn
-            conn.send(ServerMessageAction.SEND_DETAILS)
+            connectedSocket = connection
+            connection.send(ServerMessageAction.SEND_DETAILS)
         } else {
-            logger.info("Denying ${conn.remoteSocketAddress}, application already in use")
+            logger.info("Denying ${connection.remoteSocketAddress}, application already in use")
 
-            conn.send(ServerMessageAction.ALREADY_CONNECTED)
+            connection.send(ServerMessageAction.ALREADY_CONNECTED)
         }
     }
 
-    override fun onClose(conn: WebSocket, code: Int, reason: String, remote: Boolean) {
-        logger.info("${conn.remoteSocketAddress} closed a connection")
+    override fun onWsClose(connection: WebSocket) {
+        logger.info("${connection.remoteSocketAddress} closed a connection")
 
-        if (conn === connectedSocket) {
+        if (connection === connectedSocket) {
             logger.info("Application became available again")
 
             connectedSocket = null
@@ -75,8 +69,8 @@ class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
         }
     }
 
-    override fun onMessage(conn: WebSocket, message: String) {
-        logger.info("${conn.remoteSocketAddress} sent a message:")
+    override fun onWsMessage(connection: WebSocket, message: String) {
+        logger.info("${connection.remoteSocketAddress} sent a message:")
         logger.info(message)
 
         val msg = ServerMessage.fromMessage(message)
@@ -88,7 +82,7 @@ class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
 
                 SwingUtilities.invokeLater {
                     connectedController.init(title, questionId)
-                    conn.send(ServerMessageAction.APP_READY)
+                    connection.send(ServerMessageAction.APP_READY)
                 }
             }
             ServerMessageAction.CODE -> {
@@ -111,11 +105,31 @@ class Server : WebSocketServer(InetSocketAddress(Constants.WEB_SOCKET_PORT)) {
         }
     }
 
+    override fun onWsMessage(connection: WebSocket, message: ByteBuffer) {
+        onWsMessage(connection, message.toString())
+    }
+
+    override fun onGetRequest(path: String): GetRequestResult {
+        logger.info("GET $path")
+
+        when (path.trimEnd('/')) {
+            "/play" -> {
+                connectedController.forceUpload(true)
+            }
+        }
+
+        return GetRequestResult(200, "OK", "text/html", "OK".toByteArray())
+    }
+
     fun updateCode(code: String, play: Boolean) {
-        send(ServerMessageAction.UPDATE_CODE, JSONObject(mapOf(
-            "code" to code,
-            "play" to play
-        )))
+        send(
+            ServerMessageAction.UPDATE_CODE, JSONObject(
+                mapOf(
+                    "code" to code,
+                    "play" to play
+                )
+            )
+        )
     }
 
     fun getCode(callback: (code: String) -> Unit) {
