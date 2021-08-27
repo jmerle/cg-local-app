@@ -1,3 +1,7 @@
+# 1.3.0 - August 27th, 2021
+- Added support for sending HTTP GET requests to [http://localhost:53135/play](http://localhost:53135/play) to trigger "Play All Testcases" on CodinGame. This works regardless of what Auto Play is set to in CG Local's settings.
+- Fixed the "Open CodinGame" button on Linux systems that don't have the GNOME libraries installed.
+
 # 1.2.0 - May 5th, 2020
 - Moved the UI from JavaFX with TornadoFX to Swing. This change makes the application work with Java versions newer than 8 and means it is no longer required to run the application with a JRE or JDK with JavaFX available.
 - Fixed a bug where the server would sometimes not be able to bind to its port if the application was quit a short time ago.
