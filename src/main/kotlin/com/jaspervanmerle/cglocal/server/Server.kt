@@ -114,7 +114,9 @@ class Server : HttpWsServer(Constants.WEB_SOCKET_PORT) {
 
         when (path.trimEnd('/')) {
             "/play" -> {
-                connectedController.forceUpload(true)
+                if (connectedSocket != null && connectedController.selectedFile.isFile) {
+                    connectedController.forceUpload(true)
+                }
             }
         }
 
