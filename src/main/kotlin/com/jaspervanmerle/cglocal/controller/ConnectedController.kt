@@ -82,7 +82,8 @@ class ConnectedController {
     }
 
     fun selectFile() {
-        val fileChooser = JFileChooser().apply {
+        val startDirectory = if (selectedFile.exists()) selectedFile.parent else System.getProperty("user.home")
+        val fileChooser = JFileChooser(startDirectory).apply {
             dialogTitle = "Select a file"
         }
 
