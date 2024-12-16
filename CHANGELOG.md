@@ -1,7 +1,7 @@
 # Changelog
 
 ## [1.3.1](https://github.com/jmerle/cg-local-app/releases/tag/1.3.1) (2024-12-16)
-- Improved file selection by using last file's directory as initial directory (thanks [@slgeay](https://github.com/slgeay))
+- Improved file selection by using the last file's directory as initial directory (thanks [@slgeay](https://github.com/slgeay))
 
 ## [1.3.0](https://github.com/jmerle/cg-local-app/releases/tag/1.3.0) (2021-08-27)
 - Added support for sending HTTP GET requests to [http://localhost:53135/play](http://localhost:53135/play) to trigger "Play All Testcases" on CodinGame. This works regardless of what Auto Play is set to in CG Local's settings.
